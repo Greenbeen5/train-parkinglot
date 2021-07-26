@@ -1,5 +1,8 @@
-package li.lizhou.domain;
+package li.lizhou.personnel;
 
+import li.lizhou.domain.Car;
+import li.lizhou.domain.ParkingLot;
+import li.lizhou.domain.Ticket;
 import li.lizhou.helper.CarBuilderHelper;
 import li.lizhou.personnel.GraduateParkingBoy;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +15,7 @@ public class GraduateParkingBoyTest {
     public static final int CAPACITY = 10;
     ParkingLot parkingLot1;
     ParkingLot parkingLot2;
-    GraduateParkingBoy parkingBoy;
+    ParkingBoy parkingBoy;
 
     @BeforeEach
     public void setUpParkingLot(){
