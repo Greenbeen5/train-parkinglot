@@ -7,7 +7,7 @@ public class CarBuilderHelper {
 
     private static final int CAR_NUMBER_LENGTH = 7;
 
-    public Car.CarBuilder randomCar() {
+    public static Car.CarBuilder randomCar() {
         return Car.builder().carNumber(RandomStringUtils.random(CAR_NUMBER_LENGTH));
     }
 

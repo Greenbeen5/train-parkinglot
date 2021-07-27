@@ -29,9 +29,8 @@ class ManagerTest {
         graduateBoy = new GraduateParkingBoy();
         smartBoy = new SmartParkingBoy();
         superBoy = new SuperParkingBoy();
-        CarBuilderHelper carBuilderHelper = new CarBuilderHelper();
         for (int i = 0; i < CAPACITY / 2; ++i) {
-            manager.getParkingLot(1).park(carBuilderHelper.randomCar().build()); // 5 of 20 are used
+            manager.getParkingLot(1).park(CarBuilderHelper.randomCar().build()); // 5 of 20 are used
         }
     }
 
@@ -77,5 +76,13 @@ class ManagerTest {
         Assertions.assertEquals(CAPACITY / 2 + 1, manager.getParkingLot(1).getSize());
         Assertions.assertEquals(0, manager.getParkingLot(2).getSize());
         Assertions.assertEquals("京G12L9P", superBoy.getCar(ticket, parkingLots).getCarNumber());
+    }
+
+    @Test
+    public void should_return_null_when_all_are_full() {
+        for(int i = 0; i < CAPACITY * 3 - 5; ++i) {
+            manager.park(CarBuilderHelper.randomCar().build());
+        }
+        Assertions.assertNull(manager.park(Car.builder().carNumber("渝A12345").build()));
     }
 }

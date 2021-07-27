@@ -32,9 +32,8 @@ class SmartParkingBoyTest {
 
     @Test
     public void should_park_to_parking_lot_with_more_spaces(){
-        CarBuilderHelper carBuilderHelper = new CarBuilderHelper();
         for (int i = 0; i < CAPACITY / 2; ++i){
-            parkingLot1.park(carBuilderHelper.randomCar().build());
+            parkingLot1.park(CarBuilderHelper.randomCar().build());
         }
         Ticket ticket = parkingBoy.park(Car.builder().carNumber("川A7Y2B0").build(), parkingLots);
 
@@ -46,9 +45,8 @@ class SmartParkingBoyTest {
 
     @Test
     public void should_throw_exception_when_all_are_full(){
-        CarBuilderHelper carBuilderHelper = new CarBuilderHelper();
         for (int i = 0; i < CAPACITY * 2; ++i){
-            parkingBoy.park(carBuilderHelper.randomCar().build(), parkingLots);
+            parkingBoy.park(CarBuilderHelper.randomCar().build(), parkingLots);
         }
         Assertions.assertThrows(NotEnoughParkingSpaceException.class,
                 () -> parkingBoy.park(Car.builder().carNumber("川A7Y2B0").build(), parkingLots));
