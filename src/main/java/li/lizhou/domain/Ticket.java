@@ -7,7 +7,7 @@ import java.util.UUID;
 @Getter
 public class Ticket {
 
-    private String id;
+    private final String id;
 
     public Ticket() {
         id = UUID.randomUUID().toString();
