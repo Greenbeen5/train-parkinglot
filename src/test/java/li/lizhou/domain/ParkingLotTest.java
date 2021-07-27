@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ParkingLotTest {
 
@@ -24,4 +25,8 @@ class ParkingLotTest {
         assertNull(parkingLot.getCar(ticket));
     }
 
+    @Test
+    public void should_throw_exception_when_capacity_is_negative(){
+        assertThrows(IllegalArgumentException.class ,() -> new ParkingLot(0, -5));
+    }
 }
