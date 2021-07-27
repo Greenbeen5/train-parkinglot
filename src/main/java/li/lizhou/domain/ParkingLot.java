@@ -34,9 +34,16 @@ public class ParkingLot {
     }
 
     public ParkingLot(int id, int capacity) {
+        checkCapacity(capacity);
         this.id = id;
         this.capacity = capacity;
         this.parkingSpace = new HashMap<>(capacity);
+    }
+
+    private void checkCapacity(int capacity) {
+        if (0 >= capacity) {
+            throw new IllegalArgumentException("Parking lot capacity must be positive, but received " + capacity);
+        }
     }
 
     public boolean isFull() {

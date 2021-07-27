@@ -7,9 +7,9 @@ import li.lizhou.domain.Ticket;
 import java.util.Comparator;
 import java.util.Optional;
 
-public class SuperParkingBoy extends ParkingBoy {
+public class SuperParkingBoy extends AbstractParkingBoy {
     @Override
-    Ticket park(Car car) {
+    public Ticket park(Car car) {
         Optional<ParkingLot> parkingLotWithLowestOccupancyRateOptional = parkingLots
                 .stream()
                 .min(Comparator.comparingDouble((p) -> (double) p.getSize() / (double) p.getCapacity()));

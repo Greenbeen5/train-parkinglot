@@ -7,9 +7,10 @@ import java.util.List;
 
 public class Manager {
 
-    private List<ParkingBoy> parkingBoys;
+    private List<AbstractParkingBoy> parkingBoys;
 
     public Ticket parkByBoy(Car car){
+
         return null;
     }
 

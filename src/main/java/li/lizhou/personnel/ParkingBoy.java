@@ -4,44 +4,15 @@ import li.lizhou.domain.Car;
 import li.lizhou.domain.ParkingLot;
 import li.lizhou.domain.Ticket;
 
-import java.util.ArrayList;
-import java.util.List;
+public interface ParkingBoy {
 
-public abstract class ParkingBoy {
+    void addParkingLot(ParkingLot parkingLot);
 
-    protected final List<ParkingLot> parkingLots;
+    int countCars();
 
-    public ParkingBoy(){
-        parkingLots = new ArrayList<>();
-    }
+    ParkingLot getParkingLot(int parkingLotId);
 
-    void addParkingLot(ParkingLot parkingLot){
-        parkingLots.add(parkingLot);
-    }
+    Car getCar(Ticket ticket);
 
-    int countCars(){
-        return parkingLots.stream()
-                .mapToInt(ParkingLot::getSize)
-                .sum();
-    }
-
-    ParkingLot getParkingLot(int parkingLotId) {
-        for (ParkingLot parkingLot : parkingLots) {
-            if (parkingLot.getId().equals(parkingLotId)) {
-                return parkingLot;
-            }
-        }
-        return null;
-    }
-
-    Car getCar(Ticket ticket) {
-        Car car = null;
-        for (ParkingLot parkingLot : parkingLots) {
-            car = parkingLot.getCar(ticket);
-        }
-        return car;
-    }
-
-    abstract Ticket park(Car car);
-
+    Ticket park(Car car);
 }

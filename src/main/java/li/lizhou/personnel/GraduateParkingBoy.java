@@ -5,10 +5,7 @@ import li.lizhou.domain.ParkingLot;
 import li.lizhou.domain.Ticket;
 import li.lizhou.exception.NotEnoughParkingSpaceException;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class GraduateParkingBoy extends ParkingBoy {
+public class GraduateParkingBoy extends AbstractParkingBoy {
 
     @Override
     public Ticket park(Car car) {

@@ -14,7 +14,7 @@ class SmartParkingBoyTest {
     public static final int CAPACITY = 10;
     ParkingLot parkingLot1;
     ParkingLot parkingLot2;
-    ParkingBoy parkingBoy;
+    AbstractParkingBoy parkingBoy;
 
     @BeforeEach
     public void setUpParkingLot(){

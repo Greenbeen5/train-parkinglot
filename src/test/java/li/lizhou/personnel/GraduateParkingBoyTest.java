@@ -5,7 +5,6 @@ import li.lizhou.domain.ParkingLot;
 import li.lizhou.domain.Ticket;
 import li.lizhou.exception.NotEnoughParkingSpaceException;
 import li.lizhou.helper.CarBuilderHelper;
-import li.lizhou.personnel.GraduateParkingBoy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +16,7 @@ public class GraduateParkingBoyTest {
     public static final int CAPACITY = 10;
     ParkingLot parkingLot1;
     ParkingLot parkingLot2;
-    ParkingBoy parkingBoy;
+    AbstractParkingBoy parkingBoy;
 
     @BeforeEach
     public void setUpParkingLot(){
