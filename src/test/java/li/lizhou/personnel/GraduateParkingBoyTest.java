@@ -3,12 +3,14 @@ package li.lizhou.personnel;
 import li.lizhou.domain.Car;
 import li.lizhou.domain.ParkingLot;
 import li.lizhou.domain.Ticket;
+import li.lizhou.exception.NotEnoughParkingSpaceException;
 import li.lizhou.helper.CarBuilderHelper;
 import li.lizhou.personnel.GraduateParkingBoy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class GraduateParkingBoyTest {
 
@@ -37,5 +39,15 @@ public class GraduateParkingBoyTest {
         assertEquals(1, parkingBoy.getParkingLot(2).getSize());
         assertEquals("川A7Y2B0", parkingBoy.getCar(ticket).getCarNumber());
         assertEquals(0, parkingBoy.getParkingLot(2).getSize());
+    }
+
+    @Test
+    public void should_throw_exception_when_all_are_full(){
+        CarBuilderHelper carBuilderHelper = new CarBuilderHelper();
+        for (int i = 0; i < CAPACITY * 2; ++i){
+            parkingBoy.park(carBuilderHelper.randomCar().build());
+        }
+        assertThrows(NotEnoughParkingSpaceException.class,
+                () -> parkingBoy.park(Car.builder().carNumber("川A7Y2B0").build()));
     }
 }

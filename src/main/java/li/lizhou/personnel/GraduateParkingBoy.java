@@ -8,13 +8,7 @@ import li.lizhou.exception.NotEnoughParkingSpaceException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GraduateParkingBoy implements ParkingBoy {
-
-    private final List<ParkingLot> parkingLots;
-
-    public void addParkingLot(ParkingLot parkingLot) {
-        parkingLots.add(parkingLot);
-    }
+public class GraduateParkingBoy extends ParkingBoy {
 
     @Override
     public Ticket park(Car car) {
@@ -26,33 +20,4 @@ public class GraduateParkingBoy implements ParkingBoy {
         throw new NotEnoughParkingSpaceException("All the parking lots are full");
     }
 
-    @Override
-    public int countCars() {
-        return parkingLots.stream()
-                .mapToInt(ParkingLot::getSize)
-                .sum();
-    }
-
-    @Override
-    public ParkingLot getParkingLot(int parkingLotId) {
-        for (ParkingLot parkingLot : parkingLots) {
-            if (parkingLot.getId().equals(parkingLotId)) {
-                return parkingLot;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public Car getCar(Ticket ticket) {
-        Car car = null;
-        for (ParkingLot parkingLot : parkingLots) {
-            car = parkingLot.getCar(ticket);
-        }
-        return car;
-    }
-
-    public GraduateParkingBoy() {
-        parkingLots = new ArrayList<>();
-    }
 }

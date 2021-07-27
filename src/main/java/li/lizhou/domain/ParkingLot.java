@@ -10,16 +10,13 @@ public class ParkingLot {
     private static final int DEFAULT_CAPACITY = 100;
 
     private final Map<Ticket, Car> parkingSpace;
-    private Integer id;
-    private int capacity;
-
-    private int size;
+    private final Integer id;
+    private final int capacity;
 
     public Ticket park(Car car) {
-        if (size < capacity) {
+        if (getSize() < capacity) {
             Ticket ticket = new Ticket();
             parkingSpace.put(ticket, car);
-            size++;
             return ticket;
         } else {
             throw new NotEnoughParkingSpaceException("Not enough parking space");
@@ -29,7 +26,6 @@ public class ParkingLot {
     public Car getCar(Ticket ticket) {
         Car car = parkingSpace.get(ticket);
         parkingSpace.remove(ticket);
-        size--;
         return car;
     }
 
@@ -40,12 +36,11 @@ public class ParkingLot {
     public ParkingLot(int id, int capacity) {
         this.id = id;
         this.capacity = capacity;
-        this.size = 0;
         this.parkingSpace = new HashMap<>(capacity);
     }
 
     public boolean isFull() {
-        return size == capacity;
+        return getSize() == capacity;
     }
 
     public Integer getId() {
@@ -57,6 +52,6 @@ public class ParkingLot {
     }
 
     public int getSize() {
-        return size;
+        return parkingSpace.size();
     }
 }

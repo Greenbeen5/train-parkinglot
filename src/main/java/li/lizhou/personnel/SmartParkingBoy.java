@@ -4,30 +4,20 @@ import li.lizhou.domain.Car;
 import li.lizhou.domain.ParkingLot;
 import li.lizhou.domain.Ticket;
 
-public class SmartParkingBoy implements ParkingBoy {
+import java.util.Comparator;
+import java.util.Optional;
 
-    @Override
-    public void addParkingLot(ParkingLot parkingLot) {
 
-    }
+public class SmartParkingBoy extends ParkingBoy {
 
     @Override
     public Ticket park(Car car) {
-        return null;
+        Optional<ParkingLot> parkingLotWithMostSpaceOptional = parkingLots
+                .stream()
+                .max(Comparator.comparingInt((p) -> p.getCapacity() - p.getSize()));
+        return parkingLotWithMostSpaceOptional
+                .map(parkingLot -> parkingLot.park(car))
+                .orElse(null);
     }
 
-    @Override
-    public int countCars() {
-        return 0;
-    }
-
-    @Override
-    public ParkingLot getParkingLot(int parkingLotId) {
-        return null;
-    }
-
-    @Override
-    public Car getCar(Ticket ticket) {
-        return null;
-    }
 }
