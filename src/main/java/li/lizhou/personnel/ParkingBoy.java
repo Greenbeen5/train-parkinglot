@@ -4,15 +4,13 @@ import li.lizhou.domain.Car;
 import li.lizhou.domain.ParkingLot;
 import li.lizhou.domain.Ticket;
 
+import java.util.List;
+
 public interface ParkingBoy {
 
-    void addParkingLot(ParkingLot parkingLot);
+    int countCars(List<ParkingLot> parkingLots);
 
-    int countCars();
+    Car getCar(Ticket ticket, List<ParkingLot> parkingLots);
 
-    ParkingLot getParkingLot(int parkingLotId);
-
-    Car getCar(Ticket ticket);
-
-    Ticket park(Car car);
+    Ticket park(Car car, List<ParkingLot> parkingLots);
 }
