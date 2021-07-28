@@ -3,8 +3,8 @@ package li.lizhou.personnel;
 import li.lizhou.domain.Car;
 import li.lizhou.domain.ParkingLot;
 import li.lizhou.domain.Ticket;
+import li.lizhou.exception.NotEnoughParkingSpaceException;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
@@ -23,25 +23,18 @@ public class Manager {
         // at the biggest parking lot
         // (in other words, the first possible
         // parking lot ordered by capacity descending).
-        ParkingLot chosenParkingLot = parkingLots
-                .stream()
+        return parkingLots.stream()
                 .filter(Predicate.not(ParkingLot::isFull))
                 .max(Comparator.comparingInt(ParkingLot::getCapacity))
-                .orElse(null);
-        if(null == chosenParkingLot) {
-            return null;
-        } else {
-            return chosenParkingLot.park(car);
-        }
+                .orElseThrow(() -> new NotEnoughParkingSpaceException("All the parking lots are full"))
+                .park(car);
     }
 
     public ParkingLot getParkingLot(int id){
-        for (ParkingLot parkingLot : parkingLots) {
-            if (parkingLot.getId().equals(id)) {
-                return parkingLot;
-            }
-        }
-        return null;
+        return parkingLots.stream()
+                .filter((p) -> p.getId().equals(id))
+                .findAny()
+                .orElseThrow();
     }
 
     public Manager(List<ParkingLot> parkingLots) {

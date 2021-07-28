@@ -3,6 +3,7 @@ package li.lizhou.personnel;
 import li.lizhou.domain.Car;
 import li.lizhou.domain.ParkingLot;
 import li.lizhou.domain.Ticket;
+import li.lizhou.exception.NotEnoughParkingSpaceException;
 import li.lizhou.helper.CarBuilderHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -83,6 +84,6 @@ class ManagerTest {
         for(int i = 0; i < CAPACITY * 3 - 5; ++i) {
             manager.park(CarBuilderHelper.randomCar().build());
         }
-        Assertions.assertNull(manager.park(Car.builder().carNumber("渝A12345").build()));
+        Assertions.assertThrows(NotEnoughParkingSpaceException.class, () -> manager.park(Car.builder().carNumber("渝A12345").build()));
     }
 }

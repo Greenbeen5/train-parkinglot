@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -51,5 +52,10 @@ public class GraduateParkingBoyTest {
         }
         assertThrows(NotEnoughParkingSpaceException.class,
                 () -> parkingBoy.park(Car.builder().carNumber("川A7Y2B0").build(),parkingLots));
+    }
+
+    @Test
+    public void should_throw_exception_when_ticket_is_invalid(){
+        assertThrows(NoSuchElementException.class, () -> parkingBoy.getCar(new Ticket(), parkingLots));
     }
 }

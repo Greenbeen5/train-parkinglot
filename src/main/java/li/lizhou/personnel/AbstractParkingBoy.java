@@ -5,6 +5,7 @@ import li.lizhou.domain.ParkingLot;
 import li.lizhou.domain.Ticket;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class AbstractParkingBoy implements ParkingBoy {
 
@@ -15,13 +16,12 @@ public abstract class AbstractParkingBoy implements ParkingBoy {
     }
 
     public Car getCar(Ticket ticket, List<ParkingLot> parkingLots) {
-        Car car = null;
-        for (ParkingLot parkingLot : parkingLots) {
-            if(null == car) {
-                car = parkingLot.getCar(ticket);
-            }
-        }
-        return car;
+        return parkingLots
+                .stream()
+                .map(parkingLot -> parkingLot.getCar(ticket))
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElseThrow();
     }
 
     abstract public Ticket park(Car car, List<ParkingLot> parkingLots);
