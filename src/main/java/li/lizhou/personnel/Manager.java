@@ -3,16 +3,40 @@ package li.lizhou.personnel;
 import li.lizhou.domain.Car;
 import li.lizhou.domain.ParkingLot;
 import li.lizhou.domain.Ticket;
+import li.lizhou.enums.ParkingStrategyEnum;
 import li.lizhou.exception.NotEnoughParkingSpaceException;
+import li.lizhou.report.Report;
+import li.lizhou.report.ReportVisitor;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 
+import static li.lizhou.enums.ParkingStrategyEnum.*;
+
 
 public class Manager {
 
+    private final ParkingStrategyEnum parkingStrategy = MANAGER;
+
     private final List<ParkingLot> parkingLots;
+
+    private final List<ParkingBoy> parkingBoys;
+
+    public Ticket park(Car car, ParkingStrategyEnum parkingStrategy){
+        if (this.parkingStrategy.equals(parkingStrategy)) {
+            return park(car);
+        }
+        Collections.shuffle(parkingBoys);  // to ensure randomness in the parking boy selection
+        return parkingBoys
+                .stream()
+                .filter(parkingBoy -> parkingBoy.getParkingStrategy().equals(parkingStrategy))
+                .findFirst()
+                .orElseThrow()
+                .park(car, parkingLots);
+    }
 
     public Ticket park(Car car, ParkingBoy parkingBoy){
         return parkingBoy.park(car, parkingLots);
@@ -37,7 +61,13 @@ public class Manager {
                 .orElseThrow();
     }
 
-    public Manager(List<ParkingLot> parkingLots) {
+    public Report generateReport(ReportVisitor visitor) {
+        parkingBoys.forEach(visitor::visit);
+        return visitor.getReport();
+    }
+
+    public Manager(List<ParkingLot> parkingLots, List<ParkingBoy> parkingBoys) {
         this.parkingLots = parkingLots;
+        this.parkingBoys = parkingBoys;
     }
 }
