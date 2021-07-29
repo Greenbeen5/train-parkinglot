@@ -13,6 +13,17 @@ public class ParkingLot {
     private final Integer id;
     private final int capacity;
 
+    public ParkingLot(int id) {
+        this(id, DEFAULT_CAPACITY);
+    }
+
+    public ParkingLot(int id, int capacity) {
+        checkCapacity(capacity);
+        this.id = id;
+        this.capacity = capacity;
+        this.parkingSpace = new HashMap<>(capacity);
+    }
+
     public Ticket park(Car car) {
         if (getSize() < capacity) {
             Ticket ticket = new Ticket();
@@ -27,17 +38,6 @@ public class ParkingLot {
         Car car = parkingSpace.get(ticket);
         parkingSpace.remove(ticket);
         return car;
-    }
-
-    public ParkingLot(int id) {
-        this(id, DEFAULT_CAPACITY);
-    }
-
-    public ParkingLot(int id, int capacity) {
-        checkCapacity(capacity);
-        this.id = id;
-        this.capacity = capacity;
-        this.parkingSpace = new HashMap<>(capacity);
     }
 
     private void checkCapacity(int capacity) {

@@ -3,7 +3,6 @@ package li.lizhou.personnel;
 import li.lizhou.domain.Car;
 import li.lizhou.domain.ParkingLot;
 import li.lizhou.domain.Ticket;
-import li.lizhou.enums.ParkingStrategyEnum;
 import li.lizhou.exception.NotEnoughParkingSpaceException;
 import li.lizhou.helper.CarBuilderHelper;
 import li.lizhou.report.Report;
@@ -15,17 +14,19 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static li.lizhou.enums.ParkingStrategyEnum.*;
+import static li.lizhou.enums.ParkingStrategyEnum.GRADUATE;
+import static li.lizhou.enums.ParkingStrategyEnum.SMART;
+import static li.lizhou.enums.ParkingStrategyEnum.SUPER;
 
 class ManagerTest {
 
-    private Manager manager;
     public static final int CAPACITY = 10;
     List<ParkingLot> parkingLots;
     List<ParkingBoy> parkingBoys;
     ParkingBoy graduateBoy;
     ParkingBoy smartBoy;
     ParkingBoy superBoy;
+    private Manager manager;
 
     @BeforeEach
     public void setUp() {
@@ -91,7 +92,7 @@ class ManagerTest {
 
     @Test
     public void should_return_null_when_all_are_full() {
-        for(int i = 0; i < CAPACITY * 3 - 5; ++i) {
+        for (int i = 0; i < CAPACITY * 3 - 5; ++i) {
             manager.park(CarBuilderHelper.randomCar().build());
         }
         Assertions.assertThrows(NotEnoughParkingSpaceException.class, () -> manager.park(Car.builder().carNumber("渝A12345").build()));
@@ -108,7 +109,7 @@ class ManagerTest {
 
         ReportVisitor visitor = new ReportVisitor();
         Report parkingReport = manager.generateReport(visitor);
-
         // TODO finish assertions about the report
+        System.out.println(parkingReport.toString());
     }
 }

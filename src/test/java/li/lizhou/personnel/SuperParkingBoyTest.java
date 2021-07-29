@@ -22,7 +22,7 @@ class SuperParkingBoyTest {
     ParkingBoy parkingBoy;
 
     @BeforeEach
-    public void setUpParkingLot(){
+    public void setUpParkingLot() {
         parkingLots = new ArrayList<>();
         parkingLot1 = new ParkingLot(1, CAPACITY * 2);
         parkingLot2 = new ParkingLot(2, CAPACITY);
@@ -32,11 +32,11 @@ class SuperParkingBoyTest {
     }
 
     @Test
-    public void should_park_to_parking_lot_with_lower_occupancy_rate(){
-        for (int i = 0; i < CAPACITY; ++i){
+    public void should_park_to_parking_lot_with_lower_occupancy_rate() {
+        for (int i = 0; i < CAPACITY; ++i) {
             parkingLot1.park(CarBuilderHelper.randomCar().build()); // capacity: 20, size: 10
         }
-        for (int i = 0; i < CAPACITY / 3; ++i){
+        for (int i = 0; i < CAPACITY / 3; ++i) {
             parkingLot2.park(CarBuilderHelper.randomCar().build()); // capacity: 10, size: 3
         }
         // System.out.println(parkingLot1.getSize() + " " + parkingLot2.getSize());
@@ -49,8 +49,8 @@ class SuperParkingBoyTest {
     }
 
     @Test
-    public void should_throw_exception_when_all_are_full(){
-        for (int i = 0; i < CAPACITY * 3; ++i){
+    public void should_throw_exception_when_all_are_full() {
+        for (int i = 0; i < CAPACITY * 3; ++i) {
             parkingBoy.park(CarBuilderHelper.randomCar().build(), parkingLots);
         }
         Assertions.assertThrows(NotEnoughParkingSpaceException.class,

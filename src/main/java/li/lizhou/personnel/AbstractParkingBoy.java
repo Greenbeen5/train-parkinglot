@@ -5,14 +5,20 @@ import li.lizhou.domain.ParkingLot;
 import li.lizhou.domain.Ticket;
 import li.lizhou.enums.ParkingStrategyEnum;
 import li.lizhou.report.ReportVisitor;
-import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractParkingBoy implements ParkingBoy {
 
-    protected static ParkingStrategyEnum parkingStrategy;
+    protected ParkingStrategyEnum parkingStrategy;
+
+    protected List<Car> parkedCars;
+
+    public AbstractParkingBoy() {
+        parkedCars = new ArrayList<>();
+    }
 
     @Override
     public ParkingStrategyEnum getParkingStrategy() {
@@ -20,7 +26,7 @@ public abstract class AbstractParkingBoy implements ParkingBoy {
     }
 
     @Override
-    public int countCars(List<ParkingLot> parkingLots){
+    public int countCars(List<ParkingLot> parkingLots) {
         return parkingLots.stream()
                 .mapToInt(ParkingLot::getSize)
                 .sum();
@@ -28,17 +34,31 @@ public abstract class AbstractParkingBoy implements ParkingBoy {
 
     @Override
     public Car getCar(Ticket ticket, List<ParkingLot> parkingLots) {
-        return parkingLots
+        Car car = parkingLots
                 .stream()
                 .map(parkingLot -> parkingLot.getCar(ticket))
                 .filter(Objects::nonNull)
                 .findFirst()
                 .orElseThrow();
+        removeParkedCar(car);
+        return car;
+    }
+
+    protected void recordParkedCar(Car car) {
+        parkedCars.add(car);
+    }
+
+    private void removeParkedCar(Car car) {
+        parkedCars.remove(car);
+    }
+
+    public List<Car> getParkedCars() {
+        return parkedCars;
     }
 
     @Override
-    public void getReport(ReportVisitor reportVisitor){
-
+    public void acceptReportVisitor(ReportVisitor reportVisitor) {
+        reportVisitor.visit(this);
     }
 
     abstract public Ticket park(Car car, List<ParkingLot> parkingLots);

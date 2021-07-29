@@ -6,9 +6,13 @@ import lombok.Getter;
 public class ReportVisitor {
 
     @Getter
-    private Report report;
+    private final Report report;
 
-    public void visit(ParkingBoy boy){
+    public ReportVisitor() {
+        report = new Report();
+    }
 
+    public void visit(ParkingBoy boy) {
+        report.addMapping(boy, boy.getParkedCars());
     }
 }

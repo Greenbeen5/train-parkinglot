@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ParkingLotTest {
 
     @Test
-    public void should_park_and_get_car_success(){
+    public void should_park_and_get_car_success() {
         ParkingLot parkingLot = new ParkingLot(0);
         Car car = new Car("川A18023");
         Ticket ticket = parkingLot.park(car);
@@ -19,14 +19,14 @@ class ParkingLotTest {
     }
 
     @Test
-    public void should_get_car_without_parking_fail(){
+    public void should_get_car_without_parking_fail() {
         ParkingLot parkingLot = new ParkingLot(0);
         Ticket ticket = new Ticket();
         assertNull(parkingLot.getCar(ticket));
     }
 
     @Test
-    public void should_throw_exception_when_capacity_is_negative(){
-        assertThrows(IllegalArgumentException.class ,() -> new ParkingLot(0, -5));
+    public void should_throw_exception_when_capacity_is_negative() {
+        assertThrows(IllegalArgumentException.class, () -> new ParkingLot(0, -5));
     }
 }

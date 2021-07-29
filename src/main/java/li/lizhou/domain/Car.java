@@ -14,4 +14,11 @@ public class Car {
     public Car(String carNumber) {
         this.carNumber = carNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "carNumber='" + carNumber + '\'' +
+                '}';
+    }
 }

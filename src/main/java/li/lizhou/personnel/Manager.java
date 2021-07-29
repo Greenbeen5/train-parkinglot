@@ -8,13 +8,11 @@ import li.lizhou.exception.NotEnoughParkingSpaceException;
 import li.lizhou.report.Report;
 import li.lizhou.report.ReportVisitor;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static li.lizhou.enums.ParkingStrategyEnum.*;
+import static li.lizhou.enums.ParkingStrategyEnum.MANAGER;
 
 
 public class Manager {
@@ -25,24 +23,24 @@ public class Manager {
 
     private final List<ParkingBoy> parkingBoys;
 
-    public Ticket park(Car car, ParkingStrategyEnum parkingStrategy){
-        if (this.parkingStrategy.equals(parkingStrategy)) {
+    public Manager(List<ParkingLot> parkingLots, List<ParkingBoy> parkingBoys) {
+        this.parkingLots = parkingLots;
+        this.parkingBoys = parkingBoys;
+    }
+
+    public Ticket park(Car car, ParkingStrategyEnum strategy) {
+        if (this.parkingStrategy.equals(strategy)) {
             return park(car);
         }
-        Collections.shuffle(parkingBoys);  // to ensure randomness in the parking boy selection
         return parkingBoys
                 .stream()
-                .filter(parkingBoy -> parkingBoy.getParkingStrategy().equals(parkingStrategy))
-                .findFirst()
+                .filter(parkingBoy -> parkingBoy.getParkingStrategy().equals(strategy))
+                .findAny()
                 .orElseThrow()
                 .park(car, parkingLots);
     }
 
-    public Ticket park(Car car, ParkingBoy parkingBoy){
-        return parkingBoy.park(car, parkingLots);
-    }
-
-    public Ticket park(Car car){
+    public Ticket park(Car car) {
         // The manager will try to park the car
         // at the biggest parking lot
         // (in other words, the first possible
@@ -54,7 +52,7 @@ public class Manager {
                 .park(car);
     }
 
-    public ParkingLot getParkingLot(int id){
+    public ParkingLot getParkingLot(int id) {
         return parkingLots.stream()
                 .filter((p) -> p.getId().equals(id))
                 .findAny()
@@ -64,10 +62,5 @@ public class Manager {
     public Report generateReport(ReportVisitor visitor) {
         parkingBoys.forEach(visitor::visit);
         return visitor.getReport();
-    }
-
-    public Manager(List<ParkingLot> parkingLots, List<ParkingBoy> parkingBoys) {
-        this.parkingLots = parkingLots;
-        this.parkingBoys = parkingBoys;
     }
 }

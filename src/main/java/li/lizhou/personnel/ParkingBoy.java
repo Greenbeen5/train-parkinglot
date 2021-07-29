@@ -18,5 +18,7 @@ public interface ParkingBoy {
 
     Ticket park(Car car, List<ParkingLot> parkingLots);
 
-    void getReport(ReportVisitor reportVisitor);
+    List<Car> getParkedCars();
+
+    void acceptReportVisitor(ReportVisitor reportVisitor);
 }

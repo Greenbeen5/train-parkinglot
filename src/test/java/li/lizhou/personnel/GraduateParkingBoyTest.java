@@ -24,7 +24,7 @@ public class GraduateParkingBoyTest {
     ParkingBoy parkingBoy;
 
     @BeforeEach
-    public void setUpParkingLot(){
+    public void setUpParkingLot() {
         parkingLots = new ArrayList<>();
         parkingLot1 = new ParkingLot(1, CAPACITY);
         parkingLot2 = new ParkingLot(2, CAPACITY);
@@ -34,8 +34,8 @@ public class GraduateParkingBoyTest {
     }
 
     @Test
-    public void should_park_to_another_parking_lot_when_one_is_full(){
-        for (int i = 0; i < CAPACITY; ++i){
+    public void should_park_to_another_parking_lot_when_one_is_full() {
+        for (int i = 0; i < CAPACITY; ++i) {
             parkingBoy.park(CarBuilderHelper.randomCar().build(), parkingLots);
         }
         Ticket ticket = parkingBoy.park(Car.builder().carNumber("川A7Y2B0").build(), parkingLots);
@@ -46,16 +46,16 @@ public class GraduateParkingBoyTest {
     }
 
     @Test
-    public void should_throw_exception_when_all_are_full(){
-        for (int i = 0; i < CAPACITY * 2; ++i){
+    public void should_throw_exception_when_all_are_full() {
+        for (int i = 0; i < CAPACITY * 2; ++i) {
             parkingBoy.park(CarBuilderHelper.randomCar().build(), parkingLots);
         }
         assertThrows(NotEnoughParkingSpaceException.class,
-                () -> parkingBoy.park(Car.builder().carNumber("川A7Y2B0").build(),parkingLots));
+                () -> parkingBoy.park(Car.builder().carNumber("川A7Y2B0").build(), parkingLots));
     }
 
     @Test
-    public void should_throw_exception_when_ticket_is_invalid(){
+    public void should_throw_exception_when_ticket_is_invalid() {
         assertThrows(NoSuchElementException.class, () -> parkingBoy.getCar(new Ticket(), parkingLots));
     }
 }

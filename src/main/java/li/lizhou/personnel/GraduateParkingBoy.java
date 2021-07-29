@@ -11,17 +11,19 @@ import java.util.function.Predicate;
 
 public class GraduateParkingBoy extends AbstractParkingBoy {
 
-    static {
+    public GraduateParkingBoy() {
         parkingStrategy = ParkingStrategyEnum.GRADUATE;
     }
 
     @Override
     public Ticket park(Car car, List<ParkingLot> parkingLots) {
-        return parkingLots.stream()
+        Ticket ticket = parkingLots.stream()
                 .filter(Predicate.not(ParkingLot::isFull))
                 .findFirst()
                 .orElseThrow(() -> new NotEnoughParkingSpaceException("All the parking lots are full"))
                 .park(car);
+        recordParkedCar(car);
+        return ticket;
     }
 
 }
