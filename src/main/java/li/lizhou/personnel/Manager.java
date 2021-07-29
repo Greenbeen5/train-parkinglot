@@ -60,7 +60,7 @@ public class Manager {
     }
 
     public Report generateReport(ReportVisitor visitor) {
-        parkingBoys.forEach(visitor::visit);
+        parkingBoys.forEach((p) -> p.acceptReportVisitor(visitor));
         return visitor.getReport();
     }
 }
