@@ -15,10 +15,4 @@ public class Car {
         this.carNumber = carNumber;
     }
 
-    @Override
-    public String toString() {
-        return "Car{" +
-                "carNumber='" + carNumber + '\'' +
-                '}';
-    }
 }

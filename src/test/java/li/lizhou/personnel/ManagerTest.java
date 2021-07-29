@@ -103,13 +103,18 @@ class ManagerTest {
         Car carA = Car.builder().carNumber("京A67U9P").build();
         Car carB = Car.builder().carNumber("鄂CB6789").build();
         Car carC = Car.builder().carNumber("桂D8S09L").build();
-        manager.park(carA, GRADUATE);
+        Ticket ticketA = manager.park(carA, GRADUATE);
         manager.park(carB, SMART);
         manager.park(carC, SUPER);
-
+        graduateBoy.getCar(ticketA, parkingLots);
         ReportVisitor visitor = new ReportVisitor();
         Report parkingReport = manager.generateReport(visitor);
-        // TODO finish assertions about the report
+
         System.out.println(parkingReport.toString());
+
+        Assertions.assertEquals("鄂CB6789",
+                parkingReport.getBoyParkedCarMapping().get(smartBoy).get(0).getCarNumber());
+        Assertions.assertEquals("桂D8S09L",
+                parkingReport.getBoyParkedCarMapping().get(superBoy).get(0).getCarNumber());
     }
 }
