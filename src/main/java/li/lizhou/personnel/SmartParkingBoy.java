@@ -8,6 +8,7 @@ import li.lizhou.exception.NotEnoughParkingSpaceException;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class SmartParkingBoy extends AbstractParkingBoy {
 
@@ -19,6 +20,7 @@ public class SmartParkingBoy extends AbstractParkingBoy {
     public Ticket park(Car car, List<ParkingLot> parkingLots) {
         Ticket ticket = parkingLots
                 .stream()
+                .filter(Predicate.not(ParkingLot::isFull))
                 .max(Comparator.comparingInt((p) -> p.getCapacity() - p.getSize()))
                 .orElseThrow(() -> new NotEnoughParkingSpaceException("All the parking lots are full"))
                 .park(car);

@@ -21,7 +21,7 @@ public class Report {
     }
 
     public void addMapping(ParkingBoy boy, List<Car> cars) {
-        boyParkedCarMapping.put(boy, cars);
+        boyParkedCarMapping.put(boy, List.copyOf(cars));
     }
 
     private String generateMappingRecord(Map.Entry<ParkingBoy, List<Car>> entry) {
